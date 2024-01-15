@@ -1,8 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const { createTodo, updateTodo } = require('./types');
+const todo = require('./db');
 const app = express();
 
+app.use(bodyParser.json());
 app.use(express.json());
+
 
 app.post("/todo", async function(req, res) {
     const createPayload = req.body;
@@ -15,7 +20,7 @@ app.post("/todo", async function(req, res) {
     }
 
     // put it in mongo db
-    await createTodo.craete({
+    await todo.create({
         title: createPayload.title,
         description: createPayload.description,
         completed: false
@@ -25,11 +30,11 @@ app.post("/todo", async function(req, res) {
     })
 });
 
-app.get("/todos", function(req, res) {
-    const todos = todo.find({});
+app.get("/todos", async function(req, res) {
+    // const todos = todo.find({});
 
     res.json({
-        todos: todos
+        todos: []
     });
 });
 
@@ -42,7 +47,7 @@ app.put("/completed", async function(req, res) {
         });
         return;
     }
-    await todo.update({
+    await Todo.update({
         _id: req.body.id
     }, {
         completed: true
@@ -52,4 +57,7 @@ app.put("/completed", async function(req, res) {
     })
 });
 
-app.listen(3000);
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
