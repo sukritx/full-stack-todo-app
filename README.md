@@ -1,7 +1,7 @@
 ## Todo Application
-Building a basic TODO application with React
+Building a basic TODO application with React (No Auth)
 it has the following features -
 
-- Anyone can create a todo list
-- Anyone can see their existing todo list
-- Anyone can mark a todo as done
+- create a todo list
+- see their existing todo list
+- mark a todo as done
